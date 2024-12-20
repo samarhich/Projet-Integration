@@ -1,0 +1,48 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: prestataire-service-route
+          uri: http://localhost:8081
+          predicates:
+            - Path=/providers/**
+        - id: service-service-route
+          uri: http://localhost:8083
+          predicates:
+            - Path=/services/**
+        - id: reservation-service-route
+          uri: http://localhost:8086
+          predicates:
+            - Path=/reservations/**
+        - id: user-service-route
+          uri: http://localhost:3031
+          predicates:
+            - Path=/users/**
+        - id: location-service-route
+          uri: http://localhost:3031
+          predicates:
+            - Path=/location/**
+        - id: review-service-route
+          uri: http://localhost:3031
+          predicates:
+            - Path=/reviews/**
+
+  main:
+    allow-bean-definition-overriding: true # Pour éviter les conflits de beans
+
+
+
+server:
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+        endpoint:
+          prometheus:
+            enabled: true
+        metrics:
+          export:
+            prometheus:
+              enabled: true
